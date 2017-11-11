@@ -1,3 +1,11 @@
+
+/* http://en.cppreference.com/w/cpp/preprocessor/include
+To avoid repeated inclusion of the same file and endless recursion when a file includes itself, perhaps transitively
+*/
+#ifndef HELPERS
+#define HELPERS
+
+
 /**
 	helpers.cpp
 
@@ -10,14 +18,47 @@
 	which are written in python.
 */
 
+
 #include <vector>
 #include <iostream>
 #include <cmath>
 #include <string>
 #include <fstream> 
-// #include "debugging_helpers.cpp"
+#include "debugging_helpers.cpp"
 
 using namespace std;
+
+/**
+    Creates a grid of zeros
+
+    For example:
+
+    zeros(2, 3) would return
+
+    0.0  0.0  0.0
+    0.0  0.0  0.0
+
+    @param height - the height of the desired grid
+
+    @param width - the width of the desired grid.
+
+    @return a grid of zeros (floats)
+*/
+vector < vector <float> > zeros(int height, int width) {
+	int i, j;
+	vector < vector <float> > newGrid;
+	vector <float> newRow;
+
+	for (i=0; i<height; i++) {
+		newRow.clear();
+		for (j=0; j<width; j++) {
+			newRow.push_back(0.0);
+		}
+		newGrid.push_back(newRow);
+	}
+	return newGrid;
+}
+
 
 /**
 	TODO - implement this function
@@ -32,12 +73,24 @@ using namespace std;
     	   all probabilities is equal to one.
 */
 vector< vector<float> > normalize(vector< vector <float> > grid) {
-	
-	vector< vector<float> > newGrid;
 
-	// todo - your code here
+	float total = 0.0;
 
-	return newGrid;
+	// http://en.cppreference.com/w/cpp/language/range-for
+	for (auto row : grid) { // access by value
+		for (auto cell : row) {
+			total += cell;
+		}
+	}
+
+	// http://en.cppreference.com/w/cpp/language/range-for
+	for (auto&& row : grid) { // access by forwarding reference
+		for (auto&& cell: row) {
+			cell = cell/total;
+		}
+	}
+
+	return grid;
 }
 
 /**
@@ -184,39 +237,10 @@ vector < vector <char> > read_map(string file_name) {
 	return map;
 }
 
-/**
-    Creates a grid of zeros
-
-    For example:
-
-    zeros(2, 3) would return
-
-    0.0  0.0  0.0
-    0.0  0.0  0.0
-
-    @param height - the height of the desired grid
-
-    @param width - the width of the desired grid.
-
-    @return a grid of zeros (floats)
-*/
-vector < vector <float> > zeros(int height, int width) {
-	int i, j;
-	vector < vector <float> > newGrid;
-	vector <float> newRow;
-
-	for (i=0; i<height; i++) {
-		newRow.clear();
-		for (j=0; j<width; j++) {
-			newRow.push_back(0.0);
-		}
-		newGrid.push_back(newRow);
-	}
-	return newGrid;
-}
 
 // int main() {
 // 	vector < vector < char > > map = read_map("maps/m1.txt");
 // 	show_grid(map);
 // 	return 0;
 // }
+# endif
