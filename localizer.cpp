@@ -39,7 +39,6 @@ using namespace std;
            0.25 0.25
 */
 fGrid_t initialize_beliefs(cGrid_t grid) {
-	cout << "in initialize_beliefs()"<<endl;	
 	int height = grid.size();
 	int width = grid[0].size();
 	int area = height * width;
@@ -156,7 +155,6 @@ fGrid_t move(int dy, int dx,
 	fGrid_t beliefs,
 	float blurring) 
 {
-	cout << "in move()" << endl;
 	int height = beliefs.size();
 	int width = beliefs[0].size();
 
@@ -170,6 +168,5 @@ fGrid_t move(int dy, int dx,
 		}
 	}
 
-	//cout << "in move(): before blur" << endl;
 	return blur(newGrid, blurring);
 }

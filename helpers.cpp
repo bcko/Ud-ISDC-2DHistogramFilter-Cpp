@@ -61,7 +61,6 @@ fGrid_t zeros(int height, int width) {
 */
 fGrid_t normalize(fGrid_t grid) {
 	// we don't need to create new grid since grid is passed by value
-	cout << "in normalize()" << endl;
 	float total = 0.0;
 
 	// http://en.cppreference.com/w/cpp/language/range-for
@@ -113,7 +112,6 @@ fGrid_t normalize(fGrid_t grid) {
     	   has been blurred.
 */
 fGrid_t blur(fGrid_t grid, float blurring) {
-	cout << "in blur()" << endl;
 	const float center_prob = 1.0 - blurring;
 	const float corner_prob = blurring / 12.0;
 	const float adjacent_prob = blurring / 6.0;
@@ -125,16 +123,9 @@ fGrid_t blur(fGrid_t grid, float blurring) {
 					{corner_prob, adjacent_prob, corner_prob}
 					};
 
-	// http://en.cppreference.com/w/cpp/language/static_assert
-	//static_assert(grid.size() > 0 ,"grid height has to be greater than 0");
-	
-	//cout << "in blur(): before height, width" << endl;
-	//show_grid(grid);
-	
 	const int height = grid.size();
 	const int width = grid[0].size();
 
-	//cout << "in blur(): before newGrid" << endl;
 	fGrid_t newGrid = zeros(height, width); 
 	
 	for (int i = 0; i < height; i++){
@@ -152,7 +143,6 @@ fGrid_t blur(fGrid_t grid, float blurring) {
 
 	}
 
-	//cout << "in blur(): before return" << endl;
 	return normalize(newGrid);
 }
 
