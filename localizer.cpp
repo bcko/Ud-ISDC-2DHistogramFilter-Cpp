@@ -95,10 +95,6 @@ fGrid_t sense(char color,
 	float p_hit,
 	float p_miss) 
 {
-	vector<float> row, newRow;
-
-	float p;
-
 	int height = grid.size();
 	int width = grid[0].size();
 
