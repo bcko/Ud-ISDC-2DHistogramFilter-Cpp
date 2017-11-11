@@ -38,13 +38,16 @@ using namespace std;
            0.25 0.25
            0.25 0.25
 */
-vector< vector <float> > initialize_beliefs(vector< vector <char> > grid) {
+fGrid_t initialize_beliefs(cGrid_t grid) {
 	cout << "in initialize_beliefs()"<<endl;	
 	int height = grid.size();
 	int width = grid[0].size();
 	int area = height * width;
 
 	float belief_per_cell = 1.0/area;
+	
+	// vector initialization 
+	// http://www.cplusplus.com/reference/vector/vector/vector/
 	fGrid_t newGrid(height, std::vector<float> (width, belief_per_cell));
 	return newGrid;
 }
@@ -86,17 +89,46 @@ vector< vector <float> > initialize_beliefs(vector< vector <char> > grid) {
     @return - a normalized two dimensional grid of floats 
     	   representing the updated beliefs for the robot. 
 */
-vector< vector <float> > sense(char color, 
-	vector< vector <char> > grid, 
-	vector< vector <float> > beliefs, 
+fGrid_t sense(char color, 
+	cGrid_t grid, 
+	fGrid_t beliefs, 
 	float p_hit,
 	float p_miss) 
 {
+	/*
 	cout << "in sense()" << endl;
-	vector< vector <float> > newGrid;
+	fGrid_t newGrid;
 
 	// your code here
 
+	return normalize(newGrid);
+	*/
+		vector< vector <float> > newGrid;
+	vector<float> row, newRow;
+
+	float prior, p;
+
+	char cell;
+
+	int i, j, height, width;
+	height = grid.size();
+	width = grid.size();
+
+	for (i=0; i<grid.size(); i++) {
+		newRow.clear();
+		for (j=0; j<grid[0].size(); j++) {
+			prior = beliefs[i][j];
+			cell = grid[i][j];
+			if (cell == color) {
+				p = prior * p_hit;
+			}
+			else {
+				p = prior * p_miss;
+			}
+			newRow.push_back(p);
+		}
+		newGrid.push_back(newRow);
+	}
 	return normalize(newGrid);
 }
 
