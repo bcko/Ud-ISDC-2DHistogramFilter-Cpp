@@ -37,12 +37,22 @@ using fGrid_t = vector < vector <float> >;
     	   all probabilities is equal to one.
 */
 vector< vector<float> > normalize(vector< vector <float> > grid) {
-	
-	vector< vector<float> > newGrid;
+	// we don't need to create new grid since grid is passed by value
+	float total = 0.0;
 
-	// todo - your code here
+	// http://en.cppreference.com/w/cpp/language/range-for
+	for (auto row : grid) { // access by value
+		for (auto cell : row) {
+			total += cell;
+		}
+	}
 
-	return newGrid;
+	for (auto&& row : grid) { // access by forwarding reference
+		for (auto&& cell: row) {
+			cell = cell/total;
+		}
+	}
+	return grid;
 }
 
 /**
