@@ -39,10 +39,13 @@ using namespace std;
            0.25 0.25
 */
 vector< vector <float> > initialize_beliefs(vector< vector <char> > grid) {
-	vector< vector <float> > newGrid;
+	cout << "in initialize_beliefs()"<<endl;	
+	int height = grid.size();
+	int width = grid[0].size();
+	int area = height * width;
 
-	// your code here
-	
+	float belief_per_cell = 1.0/area;
+	fGrid_t newGrid(height, std::vector<float> (width, belief_per_cell));
 	return newGrid;
 }
 
