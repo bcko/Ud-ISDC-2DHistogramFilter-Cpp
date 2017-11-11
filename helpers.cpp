@@ -42,17 +42,7 @@ using fGrid_t = vector < vector <float> >;
     @return a grid of zeros (floats)
 */
 fGrid_t zeros(int height, int width) {
-	int i, j;
-	fGrid_t newGrid;
-	vector <float> newRow;
-
-	for (i=0; i<height; i++) {
-		newRow.clear();
-		for (j=0; j<width; j++) {
-			newRow.push_back(0.0);
-		}
-		newGrid.push_back(newRow);
-	}
+	fGrid_t newGrid(height, std::vector<float> (width));
 	return newGrid;
 }
 
@@ -69,7 +59,7 @@ fGrid_t zeros(int height, int width) {
     @return - a new normalized two dimensional grid where the sum of 
     	   all probabilities is equal to one.
 */
-vector< vector<float> > normalize(vector< vector <float> > grid) {
+fGrid_t normalize(fGrid_t grid) {
 	// we don't need to create new grid since grid is passed by value
 	cout << "in normalize()" << endl;
 	float total = 0.0;
@@ -122,7 +112,7 @@ vector< vector<float> > normalize(vector< vector <float> > grid) {
     @return - a new normalized two dimensional grid where probability 
     	   has been blurred.
 */
-vector < vector <float> > blur(vector < vector < float> > grid, float blurring) {
+fGrid_t blur(fGrid_t grid, float blurring) {
 	cout << "in blur()" << endl;
 	const float center_prob = 1.0 - blurring;
 	const float corner_prob = blurring / 12.0;
@@ -250,9 +240,9 @@ vector <char> read_line(string s) {
 
     @return - A grid of chars representing a map.
 */
-vector < vector <char> > read_map(string file_name) {
+cGrid_t read_map(string file_name) {
 	ifstream infile(file_name);
-	vector < vector <char> > map;
+	cGrid_t map;
 	if (infile.is_open()) {
 
 		char color;

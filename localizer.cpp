@@ -45,7 +45,7 @@ fGrid_t initialize_beliefs(cGrid_t grid) {
 	int area = height * width;
 
 	float belief_per_cell = 1.0/area;
-	
+
 	// vector initialization 
 	// http://www.cplusplus.com/reference/vector/vector/vector/
 	fGrid_t newGrid(height, std::vector<float> (width, belief_per_cell));
@@ -95,39 +95,25 @@ fGrid_t sense(char color,
 	float p_hit,
 	float p_miss) 
 {
-	/*
-	cout << "in sense()" << endl;
-	fGrid_t newGrid;
-
-	// your code here
-
-	return normalize(newGrid);
-	*/
-		vector< vector <float> > newGrid;
 	vector<float> row, newRow;
 
-	float prior, p;
+	float p;
 
-	char cell;
+	int height = grid.size();
+	int width = grid[0].size();
 
-	int i, j, height, width;
-	height = grid.size();
-	width = grid.size();
+	fGrid_t newGrid = zeros(height, width);
 
-	for (i=0; i<grid.size(); i++) {
-		newRow.clear();
-		for (j=0; j<grid[0].size(); j++) {
-			prior = beliefs[i][j];
-			cell = grid[i][j];
-			if (cell == color) {
-				p = prior * p_hit;
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			newGrid[i][j] = beliefs[i][j]; // prior belief
+			if (grid[i][j] == color) {
+				newGrid[i][j] *= p_hit;	
 			}
 			else {
-				p = prior * p_miss;
+				newGrid[i][j] *= p_miss;
 			}
-			newRow.push_back(p);
 		}
-		newGrid.push_back(newRow);
 	}
 	return normalize(newGrid);
 }
