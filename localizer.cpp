@@ -92,6 +92,7 @@ vector< vector <float> > sense(char color,
 	float p_hit,
 	float p_miss) 
 {
+	cout << "in sense()" << endl;
 	vector< vector <float> > newGrid;
 
 	// your code here
@@ -137,14 +138,24 @@ vector< vector <float> > sense(char color,
     @return - a normalized two dimensional grid of floats 
     	   representing the updated beliefs for the robot. 
 */
-vector< vector <float> > move(int dy, int dx, 
-	vector < vector <float> > beliefs,
+fGrid_t move(int dy, int dx, 
+	fGrid_t beliefs,
 	float blurring) 
 {
+	cout << "in move()" << endl;
+	int height = beliefs.size();
+	int width = beliefs[0].size();
 
-	vector < vector <float> > newGrid;
+	fGrid_t newGrid = zeros(height, width);
 
-	// your code here
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			int new_i = (i + dy + height) % height;
+			int new_j = (j + dx + width) % width;
+			newGrid[new_i][new_j] = beliefs[i][j];
+		}
+	}
 
+	//cout << "in move(): before blur" << endl;
 	return blur(newGrid, blurring);
 }

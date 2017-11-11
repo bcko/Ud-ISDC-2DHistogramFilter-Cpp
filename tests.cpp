@@ -256,9 +256,12 @@ bool test_localizer() {
 		return false;
 	}
 
-	cout << endl;
-
+	//cout << "in test_localizer(): before question_correct"<< endl;
+	
 	question_correct = test_move();
+
+	//cout << "in test_localizer(): after question_correct"<< endl;
+
 	if (!question_correct) {
 		correct = false;
 	}
