@@ -80,8 +80,8 @@ vector< vector<float> > normalize(vector< vector <float> > grid) {
 		}
 	}
 
-	for (auto&& row : grid) { // access by forwarding reference
-		for (auto&& cell: row) {
+	for (auto& row : grid) { // access by forwarding reference
+		for (auto& cell: row) {
 			cell = cell/total;
 		}
 	}
@@ -123,10 +123,39 @@ vector< vector<float> > normalize(vector< vector <float> > grid) {
 */
 vector < vector <float> > blur(vector < vector < float> > grid, float blurring) {
 
-	vector < vector <float> > newGrid;
-	
-	// your code here
+	const float center_prob = 1.0 - blurring;
+	const float corner_prob = blurring / 12.0;
+	const float adjacent_prob = blurring / 6.0;
 
+	// c++11 initializer list syntax:
+	// http://en.cppreference.com/w/cpp/container/vector/vector
+	fGrid_t window {{corner_prob, adjacent_prob, corner_prob},
+					{adjacent_prob, center_prob, adjacent_prob},
+					{corner_prob, adjacent_prob, corner_prob}
+					};
+
+	// http://en.cppreference.com/w/cpp/language/static_assert
+	//static_assert(grid.size() > 0 ,"grid height has to be greater than 0");
+
+	const int height = grid.size();
+	const int width = grid[0].size();
+
+	fGrid_t newGrid = zeros(height, width); 
+
+	for (int i = 0; i < height; i++){
+		for (int j = 0; j < width; j++) {
+			float grid_val = grid[i][j];
+			for (int dx : {-1, 0, 1}) {
+				for (int dy : {-1, 0, 1}) {
+					int new_i = (i + dy + height) % height;
+					int new_j = (j + dx + width) % width;
+					float mult = window[dx+1][dy+1];
+					newGrid[new_i][new_j] += grid_val * mult;
+				}
+			}
+		}
+
+	}
 	return normalize(newGrid);
 }
 
