@@ -45,17 +45,9 @@ using namespace std;
     @return a grid of zeros (floats)
 */
 vector < vector <float> > zeros(int height, int width) {
-	int i, j;
-	vector < vector <float> > newGrid;
-	vector <float> newRow;
-
-	for (i=0; i<height; i++) {
-		newRow.clear();
-		for (j=0; j<width; j++) {
-			newRow.push_back(0.0);
-		}
-		newGrid.push_back(newRow);
-	}
+	// vector initialization
+	// http://en.cppreference.com/w/cpp/container/vector/vector
+	std::vector<std::vector<float>> newGrid(height, std::vector<float> (width));
 	return newGrid;
 }
 
@@ -73,7 +65,7 @@ vector < vector <float> > zeros(int height, int width) {
     	   all probabilities is equal to one.
 */
 vector< vector<float> > normalize(vector< vector <float> > grid) {
-
+	// we don't need to create new grid since grid is passed by value
 	float total = 0.0;
 
 	// http://en.cppreference.com/w/cpp/language/range-for
@@ -83,13 +75,11 @@ vector< vector<float> > normalize(vector< vector <float> > grid) {
 		}
 	}
 
-	// http://en.cppreference.com/w/cpp/language/range-for
 	for (auto&& row : grid) { // access by forwarding reference
 		for (auto&& cell: row) {
 			cell = cell/total;
 		}
 	}
-
 	return grid;
 }
 
