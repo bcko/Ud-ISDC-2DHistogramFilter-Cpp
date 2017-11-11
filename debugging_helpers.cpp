@@ -1,11 +1,3 @@
-/* http://en.cppreference.com/w/cpp/preprocessor/include
-To avoid repeated inclusion of the same file and endless recursion when a file includes itself, perhaps transitively
-*/
-
-#ifndef DEBUGGING_HELPER
-#define DEBUGGING_HELPER
-
-
 /**
 	debugging_helpers.cpp
 	
@@ -58,4 +50,3 @@ void show_grid(vector < vector <char> > map) {
 	}
 }
 
-#endif

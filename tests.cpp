@@ -102,23 +102,22 @@ bool test_helpers() {
 bool test_initialize() {
 	vector < vector <char> > map;
 	map = read_map("maps/m1.txt");
-	vector < vector <float> > beliefs, correct;
-	beliefs = initialize_beliefs(map);
-
-	int h, w, A; 
-	float belief;
-
-	h = map.size();
+	int h = map.size();
 
 	if (h < 1) {
 		cout << "failed to load map. Make sure there is a maps/ directory in the same directory as this file!\n";
 		return false;
 	}
+
+	vector < vector <float> > beliefs, correct;
+	beliefs = initialize_beliefs(map);
+
+	int w, A; 
+	float belief;
+
 	w = map[0].size();
 	A = h * w;
 	belief = 1.0 / A;
-
-
 
 	int i, j;
 	vector <float> row;
@@ -184,7 +183,6 @@ bool test_move() {
 bool test_sense() {
 	vector < vector <float> > in, out, correct;
 	in = zeros(4,2);
-	in[2][2] = 1.0;
 
 	int i,j;
 	for (i=0; i<in.size(); i++)
@@ -252,6 +250,10 @@ bool test_localizer() {
 	question_correct = test_initialize();
 	if (!question_correct) {
 		correct = false;
+	}
+	if (!correct) {
+		// map could not be loaded
+		return false;
 	}
 
 	cout << endl;
