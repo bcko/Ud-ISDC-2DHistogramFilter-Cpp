@@ -15,9 +15,14 @@
 #include <cmath>
 #include <string>
 #include <fstream> 
-// #include "debugging_helpers.cpp"
+#include "debugging_helpers.cpp"
 
 using namespace std;
+
+// Type alias
+// http://en.cppreference.com/w/cpp/language/type_alias
+using cGrid_t = vector < vector <char> >;
+using fGrid_t = vector < vector <float> >;
 
 /**
 	TODO - implement this function
