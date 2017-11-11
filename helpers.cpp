@@ -41,9 +41,9 @@ using fGrid_t = vector < vector <float> >;
 
     @return a grid of zeros (floats)
 */
-vector < vector <float> > zeros(int height, int width) {
+fGrid_t zeros(int height, int width) {
 	int i, j;
-	vector < vector <float> > newGrid;
+	fGrid_t newGrid;
 	vector <float> newRow;
 
 	for (i=0; i<height; i++) {
@@ -187,7 +187,7 @@ vector < vector <float> > blur(vector < vector < float> > grid, float blurring) 
     @return - A boolean (True or False) indicating whether
     these grids are (True) or are not (False) equal.
 */
-bool close_enough(vector < vector <float> > g1, vector < vector <float> > g2) {
+bool close_enough(fGrid_t g1, fGrid_t g2) {
 	int i, j;
 	float v1, v2;
 	if (g1.size() != g2.size()) {
